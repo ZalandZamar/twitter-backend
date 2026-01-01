@@ -3,16 +3,31 @@ const app = express();
 const connectdb = require("./db/connectdb");
 require("dotenv").config();
 const authRouter = require("./routes/authRoute");
+const postRouter = require("./routes/postRoute");
 const notFound = require("./middleware/not-found");
+const authMiddleware = require("./middleware/authMiddleware");
+const logOutRouter = require("./routes/logoutRoute");
+const refreshTokenRoute = require("./routes/refreshTokenRoute");
+const cookieParser = require("cookie-parser");
+const errorHandlerMiddleware = require("./middleware/error-handler-middleware");
+
+app.use(express.json());
+app.use(cookieParser());
+//app.use(cors());
 
 app.get("/", (req, res) => {
   res.send(`<h1>ur app is up and running</h1>`);
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api", refreshTokenRoute);
+app.use("/api", logOutRouter);
+
+app.use("/api", authMiddleware, postRouter);
 
 // error handling middleware
 app.use(notFound);
+app.use(errorHandlerMiddleware);
 
 const PORT = process.env.port || 3500;
 
