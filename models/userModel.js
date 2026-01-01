@@ -39,7 +39,7 @@ userSchema.methods.accessToken = function () {
   return jwt.sign(
     { userId: this._id, name: this.name },
     process.env.ACCESS_TOKEN,
-    { expiresIn: process.env.JWT_LIFETIME }
+    { expiresIn: "1d" }
   );
 };
 

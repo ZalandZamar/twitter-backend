@@ -23,7 +23,7 @@ app.use("/api/auth", authRouter);
 app.use("/api", refreshTokenRoute);
 app.use("/api", logOutRouter);
 
-app.use("/api", authMiddleware, postRouter);
+app.use("/api/post", authMiddleware, postRouter);
 
 // error handling middleware
 app.use(notFound);

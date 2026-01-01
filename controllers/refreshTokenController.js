@@ -31,7 +31,7 @@ const handleRefreshToken = async (req, res) => {
     { userId: user._id, name: user.name },
     process.env.ACCESS_TOKEN,
     {
-      expiresIn: "1m",
+      expiresIn: "1d",
     }
   );
 
