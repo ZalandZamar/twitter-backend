@@ -9,6 +9,7 @@ const authMiddleware = require("./middleware/authMiddleware");
 const logOutRouter = require("./routes/logoutRoute");
 const followerRoute = require("./routes/followerRoute");
 const refreshTokenRoute = require("./routes/refreshTokenRoute");
+const commentsRoute = require("./routes/commentsRoute");
 const likeRoute = require("./routes/likeRouter");
 const cookieParser = require("cookie-parser");
 const errorHandlerMiddleware = require("./middleware/error-handler-middleware");
@@ -28,6 +29,7 @@ app.use("/api", logOutRouter);
 app.use("/api/post", authMiddleware, postRouter);
 app.use("/api/follow", authMiddleware, followerRoute);
 app.use("/api/like", authMiddleware, likeRoute);
+app.use("/api/comment", authMiddleware, commentsRoute);
 
 // error handling middleware
 app.use(notFound);
