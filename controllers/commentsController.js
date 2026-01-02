@@ -57,7 +57,6 @@ const updateComment = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ comments });
 };
-//6954b6095431caa91a6a1bf0
 const deleteComment = async (req, res) => {
   const {
     user: { userId },
