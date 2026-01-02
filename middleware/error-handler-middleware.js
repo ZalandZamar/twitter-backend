@@ -7,7 +7,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   };
 
   if (err.name === "TypeError") {
-    customError.errMessage = "please provide email and password";
+    customError.errMessage = "something went wrong middleware...";
     customError.statusCode = StatusCodes.BAD_REQUEST;
   }
 

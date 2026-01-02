@@ -10,6 +10,16 @@ const postSchema = new mongoose.Schema(
       ref: "User",
       required: [true, "please provide an User"],
     },
+    likesCount: {
+      type: Number,
+      default: 0,
+    },
+    likedBy: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true }
 );
