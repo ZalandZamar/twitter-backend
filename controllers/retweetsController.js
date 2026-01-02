@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const retweetsModel = require("../models/retweetsModel");
 const postModel = require("../models/postModel");
 const { NotFound, BadRequest } = require("../errors");
+const notificitionsModel = require("../models/notificitionsModel");
 
 const getAllPostRetweets = async (req, res) => {
   const {
@@ -35,6 +36,14 @@ const createRetweet = async (req, res) => {
     post: postId,
     user: userId,
     ReComment,
+  });
+
+  await notificitionsModel.create({
+    recipient: findPost.createdBy,
+    actor: userId,
+    type: "retweet",
+    post: postId,
+    read: false,
   });
 
   res.status(StatusCodes.CREATED).json({ retweet });

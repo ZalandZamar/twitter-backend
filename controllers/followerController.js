@@ -3,6 +3,8 @@ const userModel = require("../models/userModel");
 const { StatusCodes } = require("http-status-codes");
 const { BadRequest, NotFound } = require("../errors");
 const notFound = require("../middleware/not-found");
+const notificitionsModel = require("../models/notificitionsModel");
+const postModel = require("../models/postModel");
 
 const getAllUserFollowers = async (req, res) => {
   const {
@@ -46,6 +48,15 @@ const createFollower = async (req, res) => {
   const follower = await followerModel.create({
     following: id,
     follower: userId,
+  });
+
+  const findUser = await userModel.findById(id);
+
+  await notificitionsModel.create({
+    recipient: findUser._id,
+    actor: userId,
+    type: "follow",
+    read: false,
   });
 
   res.status(StatusCodes.CREATED).json({ follower });

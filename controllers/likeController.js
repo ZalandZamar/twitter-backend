@@ -1,5 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const postModel = require("../models/postModel");
+const notificationsModel = require("../models/notificitionsModel");
 const { BadRequest, NotFound } = require("../errors");
 
 const likePost = async (req, res) => {
@@ -8,7 +9,7 @@ const likePost = async (req, res) => {
     params: { postId },
   } = req;
 
-  const post = await postModel.findOne({ _id: postId });
+  const post = await postModel.findById(postId);
 
   if (!post) {
     throw new NotFound("Post not found.");
@@ -36,6 +37,14 @@ const likePost = async (req, res) => {
   } else {
     updatedPost = await toggleLike("$addToSet", 1);
   }
+
+  await notificationsModel.create({
+    recipient: post.createdBy,
+    actor: userId,
+    type: "like",
+    post: postId,
+    read: false,
+  });
 
   res.status(StatusCodes.CREATED).json({ post: updatedPost });
 };

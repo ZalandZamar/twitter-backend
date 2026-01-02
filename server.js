@@ -10,6 +10,7 @@ const logOutRouter = require("./routes/logoutRoute");
 const followerRoute = require("./routes/followerRoute");
 const refreshTokenRoute = require("./routes/refreshTokenRoute");
 const commentsRoute = require("./routes/commentsRoute");
+const notificationsRoute = require("./routes/notificitionsRoute");
 const likeRoute = require("./routes/likeRouter");
 const retweetContoller = require("./routes/retweetsRoute");
 const cookieParser = require("cookie-parser");
@@ -23,15 +24,18 @@ app.get("/", (req, res) => {
   res.send(`<h1>ur app is up and running</h1>`);
 });
 
+// genral routes
 app.use("/api/auth", authRouter);
 app.use("/api", refreshTokenRoute);
 app.use("/api", logOutRouter);
 
+// protected routes
 app.use("/api/post", authMiddleware, postRouter);
 app.use("/api/follow", authMiddleware, followerRoute);
 app.use("/api/like", authMiddleware, likeRoute);
 app.use("/api/comment", authMiddleware, commentsRoute);
 app.use("/api/retweet", authMiddleware, retweetContoller);
+app.use("/api/notify", authMiddleware, notificationsRoute);
 
 // error handling middleware
 app.use(notFound);

@@ -1,7 +1,9 @@
 const { StatusCodes } = require("http-status-codes");
 const commentsModel = require("../models/commentsModel");
 const postModel = require("../models/postModel");
+const notificationsModel = require("../models/notificitionsModel");
 const { BadRequest } = require("../errors");
+const userModel = require("../models/userModel");
 
 const getAllPostComments = async (req, res) => {
   const {
@@ -36,6 +38,17 @@ const createComment = async (req, res) => {
     post: postId,
   });
 
+  const post = await postModel.findById(postId);
+
+  //notify user
+  await notificationsModel.create({
+    recipient: post.createdBy,
+    actor: userId,
+    type: "comment",
+    post: postId,
+    read: false,
+  });
+
   res.status(StatusCodes.CREATED).json({ comments });
 };
 
@@ -48,7 +61,7 @@ const updateComment = async (req, res) => {
 
   const comments = await commentsModel.findOneAndUpdate(
     { _id: commentId, createdBy: userId },
-    req.body,
+    comment,
     {
       new: true,
       runValidators: true,
