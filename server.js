@@ -11,7 +11,9 @@ const followerRoute = require("./routes/followerRoute");
 const refreshTokenRoute = require("./routes/refreshTokenRoute");
 const commentsRoute = require("./routes/commentsRoute");
 const notificationsRoute = require("./routes/notificitionsRoute");
+const feedRoute = require("./routes/feddRoute");
 const likeRoute = require("./routes/likeRouter");
+const searchingRoute = require("./routes/searchRoute");
 const retweetContoller = require("./routes/retweetsRoute");
 const cookieParser = require("cookie-parser");
 const errorHandlerMiddleware = require("./middleware/error-handler-middleware");
@@ -36,6 +38,8 @@ app.use("/api/like", authMiddleware, likeRoute);
 app.use("/api/comment", authMiddleware, commentsRoute);
 app.use("/api/retweet", authMiddleware, retweetContoller);
 app.use("/api/notify", authMiddleware, notificationsRoute);
+app.use("/api/feed", authMiddleware, feedRoute);
+app.use("/api/search", authMiddleware, searchingRoute);
 
 // error handling middleware
 app.use(notFound);

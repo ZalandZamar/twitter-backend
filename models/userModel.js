@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// added text index for searching
+userSchema.index(
+  { name: "text", email: "text" },
+  { weights: { name: 2, email: 1 } }
+);
+
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(10);
