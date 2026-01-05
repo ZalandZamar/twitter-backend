@@ -61,7 +61,7 @@ const updateComment = async (req, res) => {
 
   const comments = await commentsModel.findOneAndUpdate(
     { _id: commentId, createdBy: userId },
-    comment,
+    { comment },
     {
       new: true,
       runValidators: true,
