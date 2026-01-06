@@ -7,7 +7,7 @@ const notificitionsModel = require("../models/notificitionsModel");
 const getAllPostRetweets = async (req, res) => {
   const {
     params: { postId },
-    user: { userId },
+    // user: { userId },
   } = req;
 
   const retweets = await retweetsModel.find({ post: postId });
