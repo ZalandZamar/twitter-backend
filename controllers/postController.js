@@ -65,7 +65,7 @@ const updatePost = async (req, res) => {
 
   const post = await postModel.findOneAndUpdate(
     { _id: postId, createdBy: userId },
-    req.body,
+    { title },
     {
       new: true,
       runValidators: true,
