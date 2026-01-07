@@ -17,10 +17,11 @@ const searchingRoute = require("./routes/searchRoute");
 const retweetContoller = require("./routes/retweetsRoute");
 const cookieParser = require("cookie-parser");
 const errorHandlerMiddleware = require("./middleware/error-handler-middleware");
+const cors = require("cors");
 
 app.use(express.json());
 app.use(cookieParser());
-//app.use(cors());
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send(`<h1>ur app is up and running</h1>`);
@@ -30,6 +31,11 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRouter);
 app.use("/api", refreshTokenRoute);
 app.use("/api", logOutRouter);
+
+//testing route
+app.get("/", (req, res) => {
+  res.send("your app is up and running");
+});
 
 // protected routes
 app.use("/api/post", authMiddleware, postRouter);
