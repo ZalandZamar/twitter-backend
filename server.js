@@ -21,7 +21,12 @@ const cors = require("cors");
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://your-frontend-domain.com",
+    credentials: true,
+  })
+);
 
 app.get("/", (req, res) => {
   res.send(`<h1>ur app is up and running</h1>`);
