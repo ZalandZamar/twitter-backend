@@ -40,8 +40,8 @@ const logIn = async (req, res) => {
 
   res.cookie("refreshToken", refreshTkn, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // true only in production
-    sameSite: "strict",
+    secure: false,
+    sameSite: "lax",
     maxAge: 24 * 60 * 60 * 1000,
   });
   res.status(StatusCodes.OK).json({ user: { name: user.name }, accessTkn });

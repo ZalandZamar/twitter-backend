@@ -28,10 +28,6 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send(`<h1>ur app is up and running</h1>`);
-});
-
 // genral routes
 app.use("/api/auth", authRouter);
 app.use("/api", refreshTokenRoute);
@@ -56,7 +52,7 @@ app.use("/api/search", authMiddleware, searchingRoute);
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 
-const PORT = process.env.port || 3500;
+const PORT = process.env.PORT || 3500;
 
 const start = async () => {
   try {
